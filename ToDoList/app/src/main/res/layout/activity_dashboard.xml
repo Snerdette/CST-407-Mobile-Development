@@ -6,16 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/dashboard_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        android:background="@color/colorPrimary" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimaryDark" />
 
-    <view class="androidx.appcompat.app.AlertController$RecycleListView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/dashboard_toolbar"
         android:id="@+id/rv_dashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </view>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_dashboard"
