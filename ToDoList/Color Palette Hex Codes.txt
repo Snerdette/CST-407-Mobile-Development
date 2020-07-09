@@ -1,0 +1,5 @@
+Maroon:    #87131C
+White:     #ffffff
+Hot Pink:  #EC5476
+Rose Pink: #D78A9F
+Dark Blue: #201639
