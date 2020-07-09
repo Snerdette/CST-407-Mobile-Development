@@ -2,6 +2,7 @@ package com.snerdette.needylist
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -67,6 +68,13 @@ class DashboardActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
             holder.toDoName.text = list[p1].name
+
+            holder.toDoName.setOnClickListener{
+                val intent = Intent(context, ItemActivity::class.java)
+                intent.putExtra(INTENT_TODO_ID, list[p1].id)
+                intent.putExtra(INTENT_TODO_NAME, list[p1].name)
+                context.startActivity(intent)
+            }
         }
 
         class ViewHolder(v:View) : RecyclerView.ViewHolder(v) {
