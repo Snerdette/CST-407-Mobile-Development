@@ -65,41 +65,39 @@ class ItemActivity : AppCompatActivity() {
     }
 
     private fun refreshList(){
-        rv_item.adapter = ItemAdapter(this, dbHandler.getToDoItems(todoId))
+        rv_item.adapter = ItemAdapter(this, dbHandler, dbHandler.getToDoItems(todoId))
     }
 
-    class ItemAdapter (val context: Context, val list: MutableList<ToDoItem>) :
+    class ItemAdapter (val context: Context, val dbHandler: DBHandler, val list: MutableList<ToDoItem>) :
         RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
-        override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_child_item, p0, false))
-        }
 
-        override fun getItemCount(): Int {
-            return list.size
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
-            holder.itemName.text = list[p1].itemName
-            holder.itemName.isChecked = list[p1].isCompleted
-            holder.itemName.setOnClickListener{
-                val intent = Intent(context, ItemActivity::class.java)
-                intent.putExtra(INTENT_TODO_ID, list[p1].id)
-                intent.putExtra(INTENT_TODO_NAME, list[p1].itemName)
-                context.startActivity(intent)
+            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
+                return ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_child_item, p0, false))
             }
-        }
 
-        class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-            val itemName: CheckBox = v.findViewById(R.id.cb_item)
-        }
+            override fun getItemCount(): Int {
+                return list.size
+            }
+
+            override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
+                holder.itemName.text = list[p1].itemName
+                holder.itemName.isChecked = list[p1].isCompleted
+                holder.itemName.setOnClickListener {
+                    list[p1].isCompleted = !list[p1].isCompleted
+                    dbHandler.updateToDoItem(list[p1])
+                }
+            }
+
+            class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+                val itemName: CheckBox = v.findViewById(R.id.cb_item)
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return if(item?.itemId == android.R.id.home){
             finish()
             true
-        }
-        else
+        } else
             super.onOptionsItemSelected(item)
     }
 }

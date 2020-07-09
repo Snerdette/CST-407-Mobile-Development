@@ -63,13 +63,26 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         cv.put(COL_ITEM_NAME, item.itemName)
         cv.put(COL_TODO_ID, item.toDoId)
         if(item.isCompleted)
-            cv.put(COL_IS_COMPLETED, 1)
+            cv.put(COL_IS_COMPLETED, true) // or 1?
         else
-            cv.put(COL_IS_COMPLETED, 0)
+            cv.put(COL_IS_COMPLETED, false) // or 0?
 
         val result = db.insert(TABLE_TODO_ITEM, null, cv)
 
         return result != (-1).toLong()
+    }
+
+    fun updateToDoItem(item : ToDoItem) {
+        val db = writableDatabase
+        val cv = ContentValues()
+        cv.put(COL_ITEM_NAME, item.itemName)
+        cv.put(COL_TODO_ID, item.toDoId)
+        if(item.isCompleted)
+            cv.put(COL_IS_COMPLETED, true) // or 1?
+        else
+            cv.put(COL_IS_COMPLETED, false) // or 0?
+
+        db.update(TABLE_TODO_ITEM, cv,"$COL_ID=?", arrayOf(item.id.toString()))
     }
 
     fun getToDoItems(todoId : Long) : MutableList<ToDoItem>{
