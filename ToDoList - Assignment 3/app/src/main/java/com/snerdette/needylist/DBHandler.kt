@@ -40,6 +40,13 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         return result != (-1).toLong()
     }
 
+    fun updateToDo(toDo: ToDo) {
+        val db = writableDatabase
+        val cv = ContentValues()
+        cv.put(COL_NAME, toDo.name)
+        db.update(TABLE_TODO, cv, "$COL_ID=?", arrayOf(toDo.id.toString()))
+    }
+
     fun deleteToDo(todoId: Long){
         val db = writableDatabase
         db.delete(TABLE_TODO_ITEM, "$COL_TODO_ID=?", arrayOf(todoId.toString()))
