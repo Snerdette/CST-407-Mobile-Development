@@ -41,15 +41,17 @@ class MainActivity : AppCompatActivity() {
 
         // Popular Movies
         popularMovies = findViewById(R.id.popular_movies)
-        popularMoviesLayoutMgr = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        //popularMovies.layoutManager = LinearLayoutManager(
-          //  this,
-           // LinearLayoutManager.HORIZONTAL,
-            //false
-        //)
-        popularMovies.layoutManager = popularMoviesLayoutMgr
-        //popularMoviesAdapter = MoviesAdapter(mutableListOf())
-        popularMovies.adapter = popularMoviesAdapter
+        popularMoviesLayoutMgr = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+        popularMovies.layoutManager = LinearLayoutManager(
+           this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
 
         popularMoviesAdapter = MoviesAdapter(mutableListOf()) {
                 movie -> showMovieDetails(movie)
@@ -62,9 +64,6 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
-        //topRatedMoviesAdapter = MoviesAdapter(mutableListOf())
-        topRatedMovies.adapter = topRatedMoviesAdapter
 
         topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) {
                 movie -> showMovieDetails(movie)
@@ -78,13 +77,18 @@ class MainActivity : AppCompatActivity() {
             false
         )
 
-        upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
-        //upcomingMoviesAdapter = MoviesAdapter(mutableListOf())
-        upcomingMovies.adapter = upcomingMoviesAdapter
-
         upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) {
                 movie -> showMovieDetails(movie)
         }
+
+        popularMovies.layoutManager = popularMoviesLayoutMgr
+        popularMovies.adapter = popularMoviesAdapter
+
+        topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
+        topRatedMovies.adapter = topRatedMoviesAdapter
+
+        upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
+        upcomingMovies.adapter = upcomingMoviesAdapter
 
         getPopularMovies()
         getTopRatedMovies()
