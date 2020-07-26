@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var popularMoviesAdapter: MoviesAdapter
     private lateinit var popularMoviesLayoutMgr: LinearLayoutManager
 
+
     private var popularMoviesPage = 1
 
     private lateinit var topRatedMovies: RecyclerView
@@ -40,11 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         // Popular Movies
         popularMovies = findViewById(R.id.popular_movies)
-        popularMovies.layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
+        popularMoviesLayoutMgr = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        //popularMovies.layoutManager = LinearLayoutManager(
+          //  this,
+           // LinearLayoutManager.HORIZONTAL,
+            //false
+        //)
         popularMovies.layoutManager = popularMoviesLayoutMgr
         //popularMoviesAdapter = MoviesAdapter(mutableListOf())
         popularMovies.adapter = popularMoviesAdapter
