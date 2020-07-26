@@ -1,0 +1,11 @@
+App Directory
+Once you have completed your application, add it to the app directory!
+
+API Key (v3 auth):
+e4b524f368b538bcc3df7496161f39a9
+
+Example API Request:
+https://api.themoviedb.org/3/movie/550?api_key=e4b524f368b538bcc3df7496161f39a9
+
+API Read Access Token (v4 auth):
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNGI1MjRmMzY4YjUzOGJjYzNkZjc0OTYxNjFmMzlhOSIsInN1YiI6IjVmMWNjNzA3ZjVmMWM1MDAzOGRiYmQ0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.x7FeckHKbV6CPU-Nhin_io8odUhYZv-MH9zxWly3hMk
