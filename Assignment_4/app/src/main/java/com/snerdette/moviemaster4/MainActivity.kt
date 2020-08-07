@@ -14,7 +14,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val adapter = MyViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(FragmentLists(), " 1.Lists ")
+        adapter.addFragment(FragmentLists(), " Tasks ")
+        adapter.addFragment(FragmentHabits(), " Habits ")
+        adapter.addFragment(FragmentDates(), " Dates ")
+        //adapter.addFragment(FragmentReminders(), " Reminders ")
+        //adapter.addFragment(FragmentStatuses(), " Status ")
         // Add More Here
 
         viewPager.adapter = adapter
@@ -25,6 +29,9 @@ class MainActivity : AppCompatActivity() {
 
         private val fragmentList : MutableList<Fragment> = ArrayList()
         private val titleList : MutableList<String> = ArrayList()
+        //private val DateList : MutableList<String> = ArrayList()
+        //private val HabitList : MutableList<String> = ArrayList()
+        //private val TaskList : MutableList<String> = ArrayList()
 
         override fun getItem(position: Int): Fragment {
             return fragmentList[position]
