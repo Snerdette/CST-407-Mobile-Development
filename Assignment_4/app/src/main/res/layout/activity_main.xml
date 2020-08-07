@@ -8,12 +8,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.material.tabs.TabLayout
+    <TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        app:tabMode="fixed"
-        app:tabGravity="fill"
         />
 
     <androidx.viewpager.widget.ViewPager

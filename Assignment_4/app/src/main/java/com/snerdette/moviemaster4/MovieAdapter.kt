@@ -24,7 +24,7 @@ class MovieAdapter(
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.item_movie, parent, false)
-        return MoviesViewHolder(view)
+        return MovieViewHolder(view)
     }
 
     override fun getItemCount(): Int = movies.size
@@ -41,7 +41,7 @@ class MovieAdapter(
         )
     }
 
-    inner class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val poster: ImageView = itemView.findViewById(R.id.item_movie_photo)
         private var movieTitle: TextView = itemView.findViewById(R.id.movie_title)
         private var movieRating: RatingBar = itemView.findViewById(R.id.movie_rating)
@@ -69,7 +69,7 @@ class MovieAdapter(
 
                     if (!exists) {
                         val newLikeReference = database.reference.child("Users").push().key
-                        likeMovies.key = newLikeReference
+                        likeMovie.key = newLikeReference
                         database.reference.child("Users").child(newLikeReference.toString()).setValue(likeMovie)
                         myLikedMovies.add(likeMovie)
                     }
@@ -80,7 +80,7 @@ class MovieAdapter(
 
                     myLikedMovies.forEach {
                         if (it.movieID == movie.id) {
-                            likeMovies.key = it.key.toString()
+                            likeMovie.key = it.key.toString()
                             database.reference.child("Users").child(it.key.toString()).removeValue()
                             myLikedMovies.remove(likeMovie)
 
@@ -104,7 +104,7 @@ class MovieAdapter(
                 .transform(CenterCrop())
                 .into(poster)
 
-            movieTitle.text = movies.title
+            movieTitle.text = movie.title
             movieRating.rating = movie.rating
             movieReviewCount.text = "${movie.reviewCount} reviews"
             itemView.setOnClickListener {onMovieClick.invoke(movie)}

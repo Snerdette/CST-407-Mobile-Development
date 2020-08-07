@@ -44,6 +44,15 @@
                 android:textSize="22sp"
                 android:textStyle="bold"/>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,7 +82,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/details_movie_year"
+                    android:id="@+id/movie_release_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#FFF"/>
+
+                <TextView
+                    android:id="@+id/movie_overview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="#FFF"/>

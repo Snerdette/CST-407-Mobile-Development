@@ -45,14 +45,14 @@
                     android:layout_gravity="center_horizontal">
 
                     <RatingBar
-                        android:id="@+id/business_rating"
+                        android:id="@+id/movie_rating"
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:theme="@style/MovieRatingBar"/>
 
                     <TextView
-                        android:id="@+id/business_review_count"
+                        android:id="@+id/movie_review_count"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
