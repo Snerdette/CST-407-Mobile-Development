@@ -14,4 +14,10 @@
         android:gravity="center"
         android:text="@string/hello_blank_fragment" />
 
+    <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 </FrameLayout>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "329849299489",
+    "firebase_url": "https://snerdette-moviemaster4.firebaseio.com",
+    "project_id": "snerdette-moviemaster4",
+    "storage_bucket": "snerdette-moviemaster4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329849299489:android:281d5be4bfe0be475eb960",
+        "android_client_info": {
+          "package_name": "com.snerdette.moviemaster4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329849299489-et7n772onc19q5vpce9o5btjlmiq98s3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaM2fVkrvvWUAv7nE-RlvvehJumG-y6mA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329849299489-et7n772onc19q5vpce9o5btjlmiq98s3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
