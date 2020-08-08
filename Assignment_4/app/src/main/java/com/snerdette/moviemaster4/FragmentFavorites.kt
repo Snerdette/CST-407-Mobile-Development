@@ -17,7 +17,7 @@ class FragmentFavorites : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        tv_fragment_name.text = "Fragment Dates"
+        tv_fragment_name.text = "My Favorite Movies"
     }
 
     /*

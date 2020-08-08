@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
@@ -18,8 +19,10 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(FragmentMovies(), " Movies ")
         adapter.addFragment(FragmentFavorites(), " Favorites ")
 
+        val tabLayout = findViewById<TabLayout>(R.id.tabs)
+
         viewPager.adapter = adapter
-        tabs.setupWithViewPager(viewPager)
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     class MyViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager){
