@@ -45,17 +45,17 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/heading" />
+                android:text="@string/movies_heading" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/subheading" />
+                android:text="@string/movies_subheading" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_businesses"
+                android:id="@+id/list_movies"
                 android:layout_width="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
