@@ -3,39 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentMovies">
-
-    <TextView
-        android:id="@+id/tv_fragment_name"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
-
-    <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+    tools:context=".FragmentFavorites">
 
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--<Button
-                android:id="@+id/btn_logout"
-                style="@style/viewCustom"
-                android:layout_marginBottom="232dp"
-                android:background="@color/colorAccent"
-                android:text="@string/logout_title"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />-->
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,17 +25,11 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/movies_heading" />
+                android:text="@string/favorites_heading" />
 
-            <!--<TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@string/movies_subheading" />-->
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_movies"
+                android:id="@+id/list_favorites"
                 android:layout_width="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -69,4 +42,5 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </FrameLayout>
