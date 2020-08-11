@@ -25,20 +25,17 @@ class FragmentMovies : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-
      override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
     private fun onMoviesFetched(movies: List<Movie>) {
-        Log.d("Movie:", "$movies")
+        //Log.d("Movie:", "$movies")
         movieAdapter.appendMovies(movies)
         attachMovieResultsOnScrollListener()
     }
-
 
     private fun getMovie() {
         MoviesRepository.getPopularMovies(
@@ -79,12 +76,12 @@ class FragmentMovies : Fragment() {
 
 
     private fun showMovieDetails(movie: Movie) {
-        val intent = Intent(context, MovieDetailsActivity::class.java)
+        /*val intent = Intent(context, MovieDetailsActivity::class.java)
         intent.putExtra(MOVIE_BACKDROP, movie.posterPath)
         intent.putExtra(MOVIE_TITLE, movie.title)
         intent.putExtra(MOVIE_RATING, movie.rating)
         //intent.putExtra(MOVIE_REVIEWCOUNT, "${movie.} reviews")
-        startActivity(intent)
+        startActivity(intent)*/
     }
 
 

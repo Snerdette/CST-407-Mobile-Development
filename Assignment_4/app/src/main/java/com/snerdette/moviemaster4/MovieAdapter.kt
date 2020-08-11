@@ -14,6 +14,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
+// https://www.reelviews.net/resources/img/default_poster.jpg
+
 class MovieAdapter(
     private var movies: MutableList<Movie>,
     private val onMovieClick: (movie: Movie) -> Unit,
@@ -42,13 +44,13 @@ class MovieAdapter(
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val poster: ImageView = itemView.findViewById(R.id.item_movie_photo)
+        private val poster: ImageView = itemView?.findViewById(R.id.item_movie_photo)
         private var movieTitle: TextView = itemView.findViewById(R.id.movie_title)
         private var movieRating: RatingBar = itemView.findViewById(R.id.movie_rating)
         private var movieReviewCount: TextView = itemView.findViewById(R.id.movie_review_count)
 
         fun bind(movie: Movie) {
-
+            val origImageURL = movie.posterPath
             val toggleButton = itemView.findViewById<ToggleButton>(R.id.favoriteButton)
             toggleButton.setOnCheckedChangeListener { _, isChecked ->
 
@@ -97,22 +99,14 @@ class MovieAdapter(
 
             toggleButton.isChecked = liked
 
-            if(movie.posterPath.contains("NULL")){
-                // replace with default movie poster if url contains
-                //val origImageURL = movie.defaultPoster
-                Glide.with(itemView)
-                    .load("https://www.reelviews.net/resources/img/default_poster.jpg")
-                    .override(150, 100)
-                    .transform(CenterCrop())
-                    .into(poster)
-            } else {
-                val origImageURL = movie.posterPath
-                Glide.with(itemView)
-                    .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
-                    .override(150, 100)
-                    .transform(CenterCrop())
-                    .into(poster)
-            }
+
+
+            Glide.with(itemView)
+                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
+                .override(150, 100)
+                .transform(CenterCrop())
+                .into(poster)
+
 
 
 
