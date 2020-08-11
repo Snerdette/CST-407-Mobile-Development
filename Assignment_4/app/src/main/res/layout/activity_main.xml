@@ -23,7 +23,7 @@
         android:layout_height="?android:attr/actionBarSize"
         >
 
-        <fragmentActivity android:name="com.snerdette.moviemaster4.FragmentMovies"
+        <fragment android:name="com.snerdette.moviemaster4.FragmentMovies"
             android:id="@+id/list"
             android:layout_weight="1"
             android:layout_width="0dp"

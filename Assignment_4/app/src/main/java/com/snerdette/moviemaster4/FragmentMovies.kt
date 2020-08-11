@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_movies.*
@@ -34,15 +33,15 @@ class FragmentMovies : Fragment() {
         return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
-    private fun onMoviesFetched(movies: List<MovieResult>) {
-        Log.d("MovieActivity:", "$movies")
+    private fun onMoviesFetched(movies: List<Movie>) {
+        //Log.d("MovieActivity:", "$movies")
         movieResultsAdapter.appendMovies(movies)
         attachMovieResultsOnScrollListener()
     }
 
 
     private fun getMovieResults() {
-        MoviesRepository.getPopularMoviesResults(
+        MoviesRepository.getPopularMovies(
             movieResultsOffset,
             ::onMoviesFetched,
             ::onError
@@ -78,6 +77,7 @@ class FragmentMovies : Fragment() {
         })
     }
 
+
     private fun showMovieDetails(movie: MovieResult) {
         val intent = Intent(context, MovieDetailsActivity::class.java)
         intent.putExtra(MOVIE_BACKDROP, movie.imageURL)
@@ -101,44 +101,12 @@ class FragmentMovies : Fragment() {
          val mySnapshot = ArrayList<LikeMovie>()
          movieResultsAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
          movieResults?.adapter = movieResultsAdapter
-         MoviesRepository.getPopularMoviesResults(
+         MoviesRepository.getPopularMovies(
              movieResultsOffset,
              onSuccess = ::onMoviesFetched,
              onError = ::onError
          )
          getMovieResults()
     }
-
-    /*
-    *
-    * override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-    *
-    *
-    * companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentLists.
-         */
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentLists().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-    * */
 
 }

@@ -17,21 +17,18 @@ object MoviesRepository {
         api = retrofit.create(Api::class.java)
     }
 
-    fun getPopularMoviesResults(
+    fun getPopularMovies(
         page: Int = 1,
-        onSuccess: (movies: List<MovieResult>) -> Unit,
+        onSuccess: (movies: List<Movie>) -> Unit,
         onError: () -> Unit
     ) {
         api.getPopularMoviesResults(page = page)
-            .enqueue(object : Callback<GetMovieResponse> {
-                override fun onResponse(
-                    call: Call<GetMovieResponse>,
-                    response: Response<GetMovieResponse>
+            .enqueue(object : Callback<GetMoviesResponse> { override fun onResponse(
+                call: Call<GetMoviesResponse>, response: Response<GetMoviesResponse>
             ) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null) {
-                        onSuccess.invoke(responseBody.movies)
+                    if (responseBody != null) { onSuccess.invoke(responseBody.movies)
                     } else {
                         onError.invoke()
                     }
@@ -39,10 +36,9 @@ object MoviesRepository {
                     onError.invoke()
                 }
             }
-                override fun onFailure(call: Call<GetMovieResponse>, t: Throwable) {
+                override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
                     onError.invoke()
                 }
             })
     }
-
 }
