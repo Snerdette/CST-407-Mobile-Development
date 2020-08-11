@@ -1,5 +1,6 @@
 package com.snerdette.moviemaster4
 
+import kotlin.jvm.functions.*
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,11 +16,11 @@ import kotlinx.android.synthetic.main.fragment_movies.*
 
 class FragmentMovies : Fragment() {
 
-    private var movieResults: RecyclerView? = null
-    private lateinit var movieResultsAdapter: MovieAdapter
-    private lateinit var movieResultsLayoutMgr: LinearLayoutManager
+    private var movie: RecyclerView? = null
+    private lateinit var movieAdapter: MovieAdapter
+    private lateinit var movieLayoutMgr: LinearLayoutManager
 
-    private var movieResultsOffset = 1
+    private var movieOffset = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,15 +35,15 @@ class FragmentMovies : Fragment() {
     }
 
     private fun onMoviesFetched(movies: List<Movie>) {
-        //Log.d("MovieActivity:", "$movies")
-        movieResultsAdapter.appendMovies(movies)
+        Log.d("Movie:", "$movies")
+        movieAdapter.appendMovies(movies)
         attachMovieResultsOnScrollListener()
     }
 
 
-    private fun getMovieResults() {
+    private fun getMovie() {
         MoviesRepository.getPopularMovies(
-            movieResultsOffset,
+            movieOffset,
             ::onMoviesFetched,
             ::onError
         )
@@ -53,37 +54,37 @@ class FragmentMovies : Fragment() {
     }
 
     private fun attachMovieResultsOnScrollListener() {
-        movieResults?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        movie?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 //Total number of movies inside MovieAdapter
-                val totalItemCount = movieResultsLayoutMgr.itemCount
+                val totalItemCount = movieLayoutMgr.itemCount
 
                 //Current number of child views attached to RecyclerView
-                val visibleItemCount = movieResultsLayoutMgr.findLastVisibleItemPosition() - movieResultsLayoutMgr.findFirstVisibleItemPosition()
+                val visibleItemCount = movieLayoutMgr.findLastVisibleItemPosition() - movieLayoutMgr.findFirstVisibleItemPosition()
 
                 //Position of leftmost visible item in list
-                val firstVisibleItem = movieResultsLayoutMgr.findFirstVisibleItemPosition()
+                val firstVisibleItem = movieLayoutMgr.findFirstVisibleItemPosition()
 
 
                 if(firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     Log.d("Main: visibleItemCount:", "$visibleItemCount")
                     Log.d("Main: totalItemCount:", "$totalItemCount")
                     //Disable scroll listener, increment moviesResultsLimit and call function
-                    movieResults!!.removeOnScrollListener(this)
-                    movieResultsOffset += 20
-                    getMovieResults()
+                    movie!!.removeOnScrollListener(this)
+                    movieOffset += 20
+                    getMovie()
                 }
             }
         })
     }
 
 
-    private fun showMovieDetails(movie: MovieResult) {
+    private fun showMovieDetails(movie: Movie) {
         val intent = Intent(context, MovieDetailsActivity::class.java)
-        intent.putExtra(MOVIE_BACKDROP, movie.imageURL)
+        intent.putExtra(MOVIE_BACKDROP, movie.posterPath)
         intent.putExtra(MOVIE_TITLE, movie.title)
         intent.putExtra(MOVIE_RATING, movie.rating)
-        intent.putExtra(MOVIE_REVIEWCOUNT, "${movie.reviewCount} reviews")
+        //intent.putExtra(MOVIE_REVIEWCOUNT, "${movie.} reviews")
         startActivity(intent)
     }
 
@@ -91,22 +92,22 @@ class FragmentMovies : Fragment() {
      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_fragment_name.text = "Movies"
 
-         movieResults = activity?.findViewById(R.id.list_movies)
-         movieResultsLayoutMgr = LinearLayoutManager(
+         movie = activity?.findViewById(R.id.list_movies)
+         movieLayoutMgr = LinearLayoutManager(
              context,
              LinearLayoutManager.VERTICAL,
              false
          )
-         movieResults?.layoutManager = movieResultsLayoutMgr
+         movie?.layoutManager = movieLayoutMgr
          val mySnapshot = ArrayList<LikeMovie>()
-         movieResultsAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
-         movieResults?.adapter = movieResultsAdapter
+         movieAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
+         movie?.adapter = movieAdapter
          MoviesRepository.getPopularMovies(
-             movieResultsOffset,
+             movieOffset,
              onSuccess = ::onMoviesFetched,
              onError = ::onError
          )
-         getMovieResults()
+         getMovie()
     }
 
 }

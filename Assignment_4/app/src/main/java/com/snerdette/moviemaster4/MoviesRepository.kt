@@ -1,6 +1,6 @@
 package com.snerdette.moviemaster4
 
-
+import kotlin.jvm.functions.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +22,7 @@ object MoviesRepository {
         onSuccess: (movies: List<Movie>) -> Unit,
         onError: () -> Unit
     ) {
-        api.getPopularMoviesResults(page = page)
+        api.getPopularMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> { override fun onResponse(
                 call: Call<GetMoviesResponse>, response: Response<GetMoviesResponse>
             ) {

@@ -15,8 +15,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 class MovieAdapter(
-    private var movies: MutableList<MovieResult>,
-    private val onMovieClick: (movieResult: MovieResult) -> Unit,
+    private var movies: MutableList<Movie>,
+    private val onMovieClick: (movie: Movie) -> Unit,
     private val myLikedMovies : MutableList<LikeMovie>
 ): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -33,7 +33,7 @@ class MovieAdapter(
         holder.bind(movies[position])
     }
 
-    fun appendMovies(movies: List<MovieResult>) {
+    fun appendMovies(movies: List<Movie>) {
         this.movies.addAll(movies)
         notifyItemRangeInserted(
             this.movies.size,
@@ -47,14 +47,14 @@ class MovieAdapter(
         private var movieRating: RatingBar = itemView.findViewById(R.id.movie_rating)
         private var movieReviewCount: TextView = itemView.findViewById(R.id.movie_review_count)
 
-        fun bind(movie: MovieResult) {
-            val origImageURL = movie.imageURL
+        fun bind(movie: Movie) {
+            val origImageURL = movie.posterPath
             val scaledImageURL = origImageURL.replace("o.jpg", "l.jpg")
             val toggleButton = itemView.findViewById<ToggleButton>(R.id.favoriteButton)
             toggleButton.setOnCheckedChangeListener { _, isChecked ->
 
                 val user = FirebaseAuth.getInstance().currentUser
-                val likeMovie = LikeMovie(null, user!!.uid, movie.id)
+                val likeMovie = LikeMovie(null, user!!.uid, movie.id.toString())
                 val database = FirebaseDatabase.getInstance()
 
 
@@ -62,7 +62,7 @@ class MovieAdapter(
 
                     var exists = false
                     myLikedMovies.forEach {
-                        if (it.movieID == movie.id) {
+                        if (it.movieID == movie.id.toString()) {
                             exists = true
                         }
                     }
@@ -79,7 +79,7 @@ class MovieAdapter(
                 else {
 
                     myLikedMovies.forEach {
-                        if (it.movieID == movie.id) {
+                        if (it.movieID == movie.id.toString()) {
                             likeMovie.key = it.key.toString()
                             database.reference.child("Users").child(it.key.toString()).removeValue()
                             myLikedMovies.remove(likeMovie)
@@ -92,7 +92,7 @@ class MovieAdapter(
 
             var liked = false
             myLikedMovies?.forEach {
-                if(movie.id == it.movieID) {
+                if(movie.id.toString() == it.movieID) {
                     liked = true
                 }
             }
@@ -106,7 +106,7 @@ class MovieAdapter(
 
             movieTitle.text = movie.title
             movieRating.rating = movie.rating
-            movieReviewCount.text = "${movie.reviewCount} reviews"
+            //movieReviewCount.text = "${movie.reviewCount} reviews"
             itemView.setOnClickListener {onMovieClick.invoke(movie)}
         }
     }

@@ -1,5 +1,6 @@
 package com.snerdette.moviemaster4
 
+import kotlin.jvm.functions.*
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
