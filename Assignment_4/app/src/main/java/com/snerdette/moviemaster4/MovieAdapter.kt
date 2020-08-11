@@ -49,7 +49,7 @@ class MovieAdapter(
 
         fun bind(movie: Movie) {
             val origImageURL = movie.posterPath
-            val scaledImageURL = origImageURL.replace("o.jpg", "l.jpg")
+            //val scaledImageURL = origImageURL.replace("o.jpg", "l.jpg")
             val toggleButton = itemView.findViewById<ToggleButton>(R.id.favoriteButton)
             toggleButton.setOnCheckedChangeListener { _, isChecked ->
 
@@ -100,7 +100,7 @@ class MovieAdapter(
             toggleButton.isChecked = liked
 
             Glide.with(itemView)
-                .load(scaledImageURL)
+                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
                 .transform(CenterCrop())
                 .into(poster)
 
