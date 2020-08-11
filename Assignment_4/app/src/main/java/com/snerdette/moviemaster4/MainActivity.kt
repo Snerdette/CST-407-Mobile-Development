@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val adapter = MyViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(Fragment(), " Movies ")
+        adapter.addFragment(FragmentMovies(), " Movies ")
         adapter.addFragment(FragmentFavorites(), " Favorites ")
 
         val tabLayout = findViewById<TabLayout>(R.id.tabs)
@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity() {
 
         private val fragmentList : MutableList<Fragment> = ArrayList()
         private val titleList : MutableList<String> = ArrayList()
-        private val movieList : MutableList<String> = ArrayList()
-        private val favoritesList : MutableList<String> = ArrayList()
 
 
         override fun getItem(position: Int): Fragment {
