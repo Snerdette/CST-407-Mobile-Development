@@ -43,6 +43,14 @@ class MovieAdapter(
         )
     }
 
+    fun appendFavoriteMovies(myLikedMovies: MutableList<LikeMovie>) {
+        this.myLikedMovies.addAll(myLikedMovies)
+        notifyItemRangeInserted(
+            this.myLikedMovies.size,
+            myLikedMovies.size - 1
+        )
+    }
+
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val poster: ImageView = itemView?.findViewById(R.id.item_movie_photo)
         private var movieTitle: TextView = itemView.findViewById(R.id.movie_title)
