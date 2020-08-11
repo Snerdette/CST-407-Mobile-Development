@@ -22,12 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         >
-
-        <!--<fragment android:name="com.snerdette.moviemaster4.FragmentMovies"
-            android:id="@+id/list"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />-->
+        
     </view>
 
     <androidx.viewpager.widget.ViewPager
