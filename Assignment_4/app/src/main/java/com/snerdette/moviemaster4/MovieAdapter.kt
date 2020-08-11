@@ -48,15 +48,13 @@ class MovieAdapter(
         private var movieReviewCount: TextView = itemView.findViewById(R.id.movie_review_count)
 
         fun bind(movie: Movie) {
-            val origImageURL = movie.posterPath
-            //val scaledImageURL = origImageURL.replace("o.jpg", "l.jpg")
+
             val toggleButton = itemView.findViewById<ToggleButton>(R.id.favoriteButton)
             toggleButton.setOnCheckedChangeListener { _, isChecked ->
 
                 val user = FirebaseAuth.getInstance().currentUser
                 val likeMovie = LikeMovie(null, user!!.uid, movie.id.toString())
                 val database = FirebaseDatabase.getInstance()
-
 
                 if (isChecked) {
 
@@ -99,10 +97,24 @@ class MovieAdapter(
 
             toggleButton.isChecked = liked
 
-            Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
-                .transform(CenterCrop())
-                .into(poster)
+            if(movie.posterPath.contains("NULL")){
+                // replace with default movie poster if url contains
+                //val origImageURL = movie.defaultPoster
+                Glide.with(itemView)
+                    .load("https://www.reelviews.net/resources/img/default_poster.jpg")
+                    .override(150, 100)
+                    .transform(CenterCrop())
+                    .into(poster)
+            } else {
+                val origImageURL = movie.posterPath
+                Glide.with(itemView)
+                    .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
+                    .override(150, 100)
+                    .transform(CenterCrop())
+                    .into(poster)
+            }
+
+
 
             movieTitle.text = movie.title
             movieRating.rating = movie.rating

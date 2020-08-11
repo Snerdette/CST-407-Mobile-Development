@@ -1,6 +1,5 @@
 package com.snerdette.moviemaster4
 
-import kotlin.jvm.functions.*
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
