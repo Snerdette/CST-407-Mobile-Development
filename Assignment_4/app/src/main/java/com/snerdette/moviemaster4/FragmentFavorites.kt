@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 
@@ -33,22 +34,23 @@ class FragmentFavorites : Fragment() {
     private fun onMoviesFetched(myLikedMovies: List<Movie>) {
         //Log.d("Movie:", "$movies")
         movieAdapter.appendFavoriteMovies(myLikedMovies as MutableList<LikeMovie>)
-        attachMovieResultsOnScrollListener()
+        attachFavoritesResultsOnScrollListener()
     }
 
-    private fun getMovie() {
-        MoviesRepository.getPopularMovies(
+    private fun getFavorites() {
+        /*MoviesRepository.getPopularMovies(
             movieOffset,
             ::onMoviesFetched,
             ::onError
-        )
+        )*/
+
     }
 
     private fun onError() {
         Toast.makeText(context, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
     }
 
-    private fun attachMovieResultsOnScrollListener() {
+    private fun attachFavoritesResultsOnScrollListener() {
         movie?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 //Total number of movies inside MovieAdapter
@@ -67,7 +69,7 @@ class FragmentFavorites : Fragment() {
                     //Disable scroll listener, increment moviesResultsLimit and call function
                     movie!!.removeOnScrollListener(this)
                     movieOffset += 20
-                    getMovie()
+                    //getFavorites()
                 }
             }
         })
@@ -80,24 +82,24 @@ class FragmentFavorites : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        tv_fragment_name.text = "Favorite Movies"
+        //tv_fragment_name.text = "Favorite Movies"
 
-        movie = activity?.findViewById(R.id.list_movies)
+        //movie = activity?.findViewById(R.id.list_favorites)
         movieLayoutMgr = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
             false
         )
-        movie?.layoutManager = movieLayoutMgr
+        //movie?.layoutManager = movieLayoutMgr
         val mySnapshot = ArrayList<LikeMovie>()
         movieAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
         movie?.adapter = movieAdapter
-        MoviesRepository.getPopularMovies(
+        /*MoviesRepository.getPopularMovies(
             movieOffset,
             onSuccess = ::onMoviesFetched,
             onError = ::onError
-        )
-        getMovie()
+        )*/
+        //getFavorites()
     }
 
 }
