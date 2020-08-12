@@ -23,6 +23,17 @@ class FragmentFavorites : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        movie = activity?.findViewById(R.id.list_favorites)
+        movieLayoutMgr = LinearLayoutManager(
+            context,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        movie?.layoutManager = movieLayoutMgr
+        val mySnapshot = ArrayList<LikeMovie>()
+        movieAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
+        movie?.adapter = movieAdapter
+        // refresh myLikedMovies here?
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -73,16 +84,7 @@ class FragmentFavorites : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        movie = activity?.findViewById(R.id.list_favorites)
-        movieLayoutMgr = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        movie?.layoutManager = movieLayoutMgr
-        val mySnapshot = ArrayList<LikeMovie>()
-        movieAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
-        movie?.adapter = movieAdapter
+
 
     }
 
