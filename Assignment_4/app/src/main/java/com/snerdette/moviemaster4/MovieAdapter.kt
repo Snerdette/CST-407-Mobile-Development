@@ -107,16 +107,11 @@ class MovieAdapter(
 
             toggleButton.isChecked = liked
 
-
-
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
                 .override(150, 100)
                 .transform(CenterCrop())
                 .into(poster)
-
-
-
 
             movieTitle.text = movie.title
             movieRating.rating = movie.rating

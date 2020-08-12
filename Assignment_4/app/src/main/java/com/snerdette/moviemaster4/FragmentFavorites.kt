@@ -37,14 +37,6 @@ class FragmentFavorites : Fragment() {
         attachFavoritesResultsOnScrollListener()
     }
 
-    private fun getFavorites() {
-        /*MoviesRepository.getPopularMovies(
-            movieOffset,
-            ::onMoviesFetched,
-            ::onError
-        )*/
-
-    }
 
     private fun onError() {
         Toast.makeText(context, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
@@ -69,7 +61,6 @@ class FragmentFavorites : Fragment() {
                     //Disable scroll listener, increment moviesResultsLimit and call function
                     movie!!.removeOnScrollListener(this)
                     movieOffset += 20
-                    //getFavorites()
                 }
             }
         })
@@ -77,29 +68,22 @@ class FragmentFavorites : Fragment() {
 
 
     private fun showMovieDetails(movie: Movie) {
-
+        // stretch goal lol
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //tv_fragment_name.text = "Favorite Movies"
-
-        //movie = activity?.findViewById(R.id.list_favorites)
+        movie = activity?.findViewById(R.id.list_favorites)
         movieLayoutMgr = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
             false
         )
-        //movie?.layoutManager = movieLayoutMgr
+        movie?.layoutManager = movieLayoutMgr
         val mySnapshot = ArrayList<LikeMovie>()
         movieAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
         movie?.adapter = movieAdapter
-        /*MoviesRepository.getPopularMovies(
-            movieOffset,
-            onSuccess = ::onMoviesFetched,
-            onError = ::onError
-        )*/
-        //getFavorites()
+
     }
 
 }
