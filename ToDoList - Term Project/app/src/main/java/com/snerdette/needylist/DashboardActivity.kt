@@ -1,25 +1,28 @@
 package com.snerdette.needylist
 
-import android.content.Context
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.DatePicker.OnDateChangedListener
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.snerdette.needylist.DTO.ToDo
-import com.snerdette.needylist.DTO.ToDoItem
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.dialog_dashboard.*
+
 
 class DashboardActivity : AppCompatActivity() {
 
     lateinit var dbHandler : DBHandler
+    var picker: DatePickerDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +78,20 @@ class DashboardActivity : AppCompatActivity() {
         dialog.setTitle("Update ToDo")
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val toDoName = view?.findViewById<EditText>(R.id.ev_todo)
+        var _date = ""
         // TODO: HELP: is this getting the default date for DatePicker or the ev_todo's dueDate?
         val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
-
+        /*picker = DatePickerDialog(
+            this@DashboardActivity,
+            OnDateSetListener { view,
+                                year,
+                                monthOfYear,
+                                dayOfMonth -> _date =(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+            },
+            year,
+            month,
+            day
+        )*/
         val monthStr = toDo.dueDate?.take(2)
         val dayStr = toDo.dueDate?.substring(3,5)
         val yearStr = toDo.dueDate?.takeLast(4)
@@ -90,7 +104,9 @@ class DashboardActivity : AppCompatActivity() {
             .plus('/')
             .plus(yearStr)
         datePicker1?.updateDate(year, month, day)
+
         toDoName?.setText(toDo.name)
+
 
         dialog.setView(view)
         dialog.setPositiveButton("Update") { _: DialogInterface, _: Int ->
@@ -110,6 +126,7 @@ class DashboardActivity : AppCompatActivity() {
         }
         dialog.show()
     }
+
 
     override fun onResume(){
         refreshList()
