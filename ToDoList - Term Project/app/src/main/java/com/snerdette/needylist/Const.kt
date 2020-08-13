@@ -16,3 +16,4 @@ const val COL_IS_COMPLETED = "isCompleted"
 
 const val INTENT_TODO_ID = "TodoId"
 const val INTENT_TODO_NAME = "TodoName"
+const val INTENT_TODO_DUE_DATE = "TodoDueDate"

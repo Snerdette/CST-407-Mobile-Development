@@ -32,13 +32,14 @@ class DashboardActivity : AppCompatActivity() {
             dialog.setTitle("Add ToDo")
             val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
             val toDoName = view.findViewById<EditText>(R.id.ev_todo)
-            val toDoDate = view.findViewById<EditText>(R.id.datePicker1)
+            val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
             dialog.setView(view)
             dialog.setPositiveButton("Add") { _: DialogInterface, _: Int ->
                if(toDoName.text.isNotEmpty()){
                    val toDo = ToDo()
                    toDo.name = toDoName.text.toString()
-                   toDo.dueDate = toDoDate.text.toString()
+                   toDo.dueDate = toDoDate.toString()
+                   //toDoDate.dayOfMonth
                    dbHandler.addToDo(toDo)
                    refreshList()
                }
@@ -99,7 +100,7 @@ class DashboardActivity : AppCompatActivity() {
                 val intent = Intent(activity, ItemActivity::class.java)
                 intent.putExtra(INTENT_TODO_ID, list[p1].id)
                 intent.putExtra(INTENT_TODO_NAME, list[p1].name)
-                intent.putExtra(INTENT_TODO_NAME, list[p1].dueDate)
+                intent.putExtra(INTENT_TODO_DUE_DATE, list[p1].dueDate)
                 activity.startActivity(intent)
             }
 

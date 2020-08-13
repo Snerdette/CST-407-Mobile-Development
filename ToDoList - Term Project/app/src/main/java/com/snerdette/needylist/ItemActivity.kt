@@ -54,6 +54,7 @@ class ItemActivity : AppCompatActivity() {
                         .toString() + "/" + (picker?.getMonth()?.plus(1).toString() + "/" + picker?.getYear()
                 ))
             }
+
         })
 
         fab_item.setOnClickListener{
@@ -107,12 +108,14 @@ class ItemActivity : AppCompatActivity() {
         dialog.setTitle("Update ToDo Item")
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val toDoName = view.findViewById<EditText>(R.id.ev_todo)
+        val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
         toDoName.setText(item.itemName)
         dialog.setView(view)
         dialog.setPositiveButton("Update") { _: DialogInterface, _: Int ->
             if(toDoName.text.isNotEmpty()){
                 item.itemName = toDoName.text.toString()
                 item.toDoId = todoId
+                item.dueDate = toDoDate
                 item.isCompleted = false
                 dbHandler.updateToDoItem(item)
                 refreshList()

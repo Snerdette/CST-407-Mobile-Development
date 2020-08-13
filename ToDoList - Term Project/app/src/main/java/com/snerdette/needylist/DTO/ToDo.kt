@@ -4,6 +4,6 @@ class ToDo {
     var id: Long = -1
     var name = ""
     var createdAt = ""
-    var dueDate = ""
+    var dueDate : String? = ""
     var items: MutableList<ToDoItem> = ArrayList()
 }
