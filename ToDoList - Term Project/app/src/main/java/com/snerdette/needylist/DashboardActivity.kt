@@ -75,21 +75,32 @@ class DashboardActivity : AppCompatActivity() {
         dialog.setTitle("Update ToDo")
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val toDoName = view?.findViewById<EditText>(R.id.ev_todo)
+        // TODO: HELP: is this getting the default date for DatePicker or the ev_todo's dueDate?
         val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
-        val year = toDoDate.year.toString()
-        val yearInt = toDoDate.year
-        val month = toDoDate.month.toString()
-        val monthInt = toDoDate.month
-        val day = toDoDate.dayOfMonth.toString()
-        val dayInt = toDoDate.dayOfMonth
-        val newDate = month.plus('/').plus(day).plus('/').plus(year)
-        datePicker1?.updateDate(yearInt, monthInt, dayInt)
+
+        val monthStr = toDo.dueDate?.take(2)
+        val dayStr = toDo.dueDate?.substring(3,5)
+        val yearStr = toDo.dueDate?.takeLast(4)
+        var year = yearStr!!.toInt()
+        var month = monthStr!!.toInt()
+        var day = dayStr!!.toInt()
+        val newDate = monthStr
+            .plus('/')
+            .plus(dayStr)
+            .plus('/')
+            .plus(yearStr)
+        datePicker1?.updateDate(year, month, day)
         toDoName?.setText(toDo.name)
 
         dialog.setView(view)
         dialog.setPositiveButton("Update") { _: DialogInterface, _: Int ->
             if (toDoName!!.text.isNotEmpty()) {
                 toDo.name = toDoName?.text.toString()
+                val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
+                val year = toDoDate.year.toString()
+                val month = toDoDate.month.toString()
+                val day = toDoDate.dayOfMonth.toString()
+                val newDate = month.plus('/').plus(day).plus('/').plus(year)
                 toDo.dueDate = newDate
                 dbHandler.updateToDo(toDo)
                 refreshList()
