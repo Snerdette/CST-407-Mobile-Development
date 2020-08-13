@@ -43,6 +43,7 @@ class ItemActivity : AppCompatActivity() {
 
         rv_item.layoutManager = LinearLayoutManager(this)
 
+
         val tvw = findViewById(R.id.textView1) as TextView?
         val picker = findViewById(R.id.datePicker1) as DatePicker?
         val btnGet = findViewById<View>(R.id.button1) as Button?
@@ -50,8 +51,8 @@ class ItemActivity : AppCompatActivity() {
             override fun onClick(v: View?) {
                 tvw?.setText(
                     "Selected Date: " + picker?.getDayOfMonth()
-                        .toString() + "/" + (picker?.getMonth()?.plus(1)).toString() + "/" + picker?.getYear()
-                )
+                        .toString() + "/" + (picker?.getMonth()?.plus(1).toString() + "/" + picker?.getYear()
+                ))
             }
         })
 

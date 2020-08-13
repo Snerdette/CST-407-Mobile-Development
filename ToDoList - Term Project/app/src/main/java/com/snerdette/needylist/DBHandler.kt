@@ -36,6 +36,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, toDo.name)
+        cv.put(COL_NAME, toDo.dueDate)
         val result = db.insert(TABLE_TODO, null, cv)
         return result != (-1).toLong()
     }
@@ -44,6 +45,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, toDo.name)
+        cv.put(COL_NAME, toDo.dueDate)
         db.update(TABLE_TODO, cv, "$COL_ID=?", arrayOf(toDo.id.toString()))
     }
 
@@ -79,6 +81,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 val todo = ToDo()
                 todo.id  = queryResult.getLong(queryResult.getColumnIndex(COL_ID))
                 todo.name  = queryResult.getString(queryResult.getColumnIndex(COL_NAME))
+                todo.dueDate  = queryResult.getString(queryResult.getColumnIndex(COL_NAME))
                 result.add(todo)
             } while (queryResult.moveToNext())
         }

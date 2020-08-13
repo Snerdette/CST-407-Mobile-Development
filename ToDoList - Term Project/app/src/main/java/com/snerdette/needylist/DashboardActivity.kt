@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,11 +32,13 @@ class DashboardActivity : AppCompatActivity() {
             dialog.setTitle("Add ToDo")
             val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
             val toDoName = view.findViewById<EditText>(R.id.ev_todo)
+            val toDoDate = view.findViewById<EditText>(R.id.datePicker1)
             dialog.setView(view)
             dialog.setPositiveButton("Add") { _: DialogInterface, _: Int ->
                if(toDoName.text.isNotEmpty()){
                    val toDo = ToDo()
                    toDo.name = toDoName.text.toString()
+                   toDo.dueDate = toDoDate.text.toString()
                    dbHandler.addToDo(toDo)
                    refreshList()
                }
@@ -56,12 +55,15 @@ class DashboardActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
         dialog.setTitle("Update ToDo")
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
-        val toDoName = view.findViewById<EditText>(R.id.ev_todo)
-        toDoName.setText(toDo.name)
+        val toDoName = view?.findViewById<EditText>(R.id.ev_todo)
+        val toDoDate = view?.findViewById<DatePicker>(R.id.datePicker1)
+        toDoName?.setText(toDo.name)
+        toDoDate?.drawingTime.toString()
         dialog.setView(view)
         dialog.setPositiveButton("Update") { _: DialogInterface, _: Int ->
-            if (toDoName.text.isNotEmpty()) {
-                toDo.name = toDoName.text.toString()
+            if (toDoName!!.text.isNotEmpty()) {
+                toDo.name = toDoName?.text.toString()
+                toDo.dueDate = toDoDate?.drawingTime.toString()
                 dbHandler.updateToDo(toDo)
                 refreshList()
             }
@@ -97,6 +99,7 @@ class DashboardActivity : AppCompatActivity() {
                 val intent = Intent(activity, ItemActivity::class.java)
                 intent.putExtra(INTENT_TODO_ID, list[p1].id)
                 intent.putExtra(INTENT_TODO_NAME, list[p1].name)
+                intent.putExtra(INTENT_TODO_NAME, list[p1].dueDate)
                 activity.startActivity(intent)
             }
 
