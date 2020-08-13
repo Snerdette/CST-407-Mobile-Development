@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snerdette.needylist.DTO.ToDo
 import com.snerdette.needylist.DTO.ToDoItem
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.dialog_dashboard.*
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -32,13 +33,30 @@ class DashboardActivity : AppCompatActivity() {
             dialog.setTitle("Add ToDo")
             val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
             val toDoName = view.findViewById<EditText>(R.id.ev_todo)
-            val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
-            dialog.setView(view)
+            var toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
+            val year = toDoDate.year.toString()
+            val yearInt = toDoDate.year
+            val month = toDoDate.month.toString()
+            val monthInt = toDoDate.month
+            val day = toDoDate.dayOfMonth.toString()
+            val dayInt = toDoDate.dayOfMonth
+            val newDate = month.plus('/').plus(day).plus('/').plus(year)
+            datePicker1?.updateDate(yearInt, monthInt, dayInt)
+                dialog.setView(view)
             dialog.setPositiveButton("Add") { _: DialogInterface, _: Int ->
                if(toDoName.text.isNotEmpty()){
                    val toDo = ToDo()
+                   var toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
+                   val year = toDoDate.year.toString()
+                   val yearInt = toDoDate.year
+                   val month = toDoDate.month.toString()
+                   val monthInt = toDoDate.month
+                   val day = toDoDate.dayOfMonth.toString()
+                   val dayInt = toDoDate.dayOfMonth
+                   val newDate = month.plus('/').plus(day).plus('/').plus(year)
+                   datePicker1?.updateDate(yearInt, monthInt, dayInt)
                    toDo.name = toDoName.text.toString()
-                   toDo.dueDate = toDoDate.toString()
+                   toDo.dueDate = newDate
                    //toDoDate.dayOfMonth
                    dbHandler.addToDo(toDo)
                    refreshList()
@@ -57,14 +75,22 @@ class DashboardActivity : AppCompatActivity() {
         dialog.setTitle("Update ToDo")
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val toDoName = view?.findViewById<EditText>(R.id.ev_todo)
-        val toDoDate = view?.findViewById<DatePicker>(R.id.datePicker1)
+        val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
+        val year = toDoDate.year.toString()
+        val yearInt = toDoDate.year
+        val month = toDoDate.month.toString()
+        val monthInt = toDoDate.month
+        val day = toDoDate.dayOfMonth.toString()
+        val dayInt = toDoDate.dayOfMonth
+        val newDate = month.plus('/').plus(day).plus('/').plus(year)
+        datePicker1?.updateDate(yearInt, monthInt, dayInt)
         toDoName?.setText(toDo.name)
-        toDoDate?.drawingTime.toString()
+
         dialog.setView(view)
         dialog.setPositiveButton("Update") { _: DialogInterface, _: Int ->
             if (toDoName!!.text.isNotEmpty()) {
                 toDo.name = toDoName?.text.toString()
-                toDo.dueDate = toDoDate?.drawingTime.toString()
+                toDo.dueDate = newDate
                 dbHandler.updateToDo(toDo)
                 refreshList()
             }

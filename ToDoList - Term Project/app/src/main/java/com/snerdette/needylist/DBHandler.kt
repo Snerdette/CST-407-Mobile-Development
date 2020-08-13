@@ -14,7 +14,8 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
             "CREATE TABLE $TABLE_TODO (" +
                 "$COL_ID integer PRIMARY KEY AUTOINCREMENT,"+
                 "$COL_CREATED_AT datetime DEFAULT CURRENT_TIMESTAMP,"+
-                "$COL_NAME varchar);"
+                "$COL_NAME varchar,"+
+                "$COL_DUE_DATE varchar);"
 
         val createToDoItemTable =
             "CREATE TABLE $TABLE_TODO_ITEM (" +
@@ -22,6 +23,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 "$COL_CREATED_AT datetime DEFAULT CURRENT_TIMESTAMP,"+
                 "$COL_TODO_ID integer,"+
                 "$COL_ITEM_NAME varchar,"+
+                "$COL_ITEM_DUE_DATE varchar,"+
                 "$COL_IS_COMPLETED integer);"
 
         db.execSQL(createToDoTable)
@@ -36,7 +38,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, toDo.name)
-        cv.put(COL_NAME, toDo.dueDate)
+        cv.put(COL_DUE_DATE, toDo.dueDate)
         val result = db.insert(TABLE_TODO, null, cv)
         return result != (-1).toLong()
     }
@@ -45,7 +47,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, toDo.name)
-        cv.put(COL_NAME, toDo.dueDate)
+        cv.put(COL_DUE_DATE, toDo.dueDate)
         db.update(TABLE_TODO, cv, "$COL_ID=?", arrayOf(toDo.id.toString()))
     }
 
@@ -65,6 +67,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 item.id = queryResult.getLong(queryResult.getColumnIndex(COL_ID))
                 item.toDoId = queryResult.getLong(queryResult.getColumnIndex(COL_TODO_ID))
                 item.itemName = queryResult.getString(queryResult.getColumnIndex(COL_ITEM_NAME))
+                item.dueDate = queryResult.getString(queryResult.getColumnIndex(COL_ITEM_DUE_DATE))
                 item.isCompleted = isCompleted
                 updateToDoItem(item)
             } while (queryResult.moveToNext())
@@ -81,7 +84,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 val todo = ToDo()
                 todo.id  = queryResult.getLong(queryResult.getColumnIndex(COL_ID))
                 todo.name  = queryResult.getString(queryResult.getColumnIndex(COL_NAME))
-                todo.dueDate  = queryResult.getString(queryResult.getColumnIndex(COL_NAME))
+                todo.dueDate  = queryResult.getString(queryResult.getColumnIndex(COL_DUE_DATE))
                 result.add(todo)
             } while (queryResult.moveToNext())
         }
@@ -94,6 +97,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_ITEM_NAME, item.itemName)
+        cv.put(COL_ITEM_DUE_DATE, item.dueDate)
         cv.put(COL_TODO_ID, item.toDoId)
         if(item.isCompleted)
             cv.put(COL_IS_COMPLETED, true) // or 1?
@@ -108,6 +112,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
     fun updateToDoItem(item : ToDoItem) {
         val db = writableDatabase
         val cv = ContentValues()
+        cv.put(COL_ITEM_DUE_DATE, item.dueDate)
         cv.put(COL_ITEM_NAME, item.itemName)
         cv.put(COL_TODO_ID, item.toDoId)
         cv.put(COL_IS_COMPLETED, true)
@@ -132,6 +137,7 @@ class DBHandler(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
                 item.id = queryResult.getLong(queryResult.getColumnIndex(COL_ID))
                 item.toDoId = queryResult.getLong(queryResult.getColumnIndex(COL_TODO_ID))
                 item.itemName = queryResult.getString(queryResult.getColumnIndex(COL_ITEM_NAME))
+                item.dueDate = queryResult.getString(queryResult.getColumnIndex(COL_ITEM_DUE_DATE))
                 item.isCompleted = queryResult.getInt(queryResult.getColumnIndex(COL_IS_COMPLETED)) == 1
                 result.add(item)
             } while (queryResult.moveToNext())

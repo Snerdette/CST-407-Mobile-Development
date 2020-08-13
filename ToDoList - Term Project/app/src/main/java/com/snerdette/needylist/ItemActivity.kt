@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.snerdette.needylist.DTO.ToDoItem
 import kotlinx.android.synthetic.main.activity_item.*
+import kotlinx.android.synthetic.main.dialog_dashboard.*
 import java.util.*
 
 
@@ -109,13 +110,19 @@ class ItemActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val toDoName = view.findViewById<EditText>(R.id.ev_todo)
         val toDoDate = view.findViewById<DatePicker>(R.id.datePicker1)
+        val year = toDoDate.year.toString()
+        val month = toDoDate.month.toString()
+        val day = toDoDate.dayOfMonth.toString()
+        val newDate = month.plus('/').plus(day).plus('/').plus(year)
         toDoName.setText(item.itemName)
+        textView1.setText(newDate)
+
         dialog.setView(view)
         dialog.setPositiveButton("Update") { _: DialogInterface, _: Int ->
             if(toDoName.text.isNotEmpty()){
                 item.itemName = toDoName.text.toString()
                 item.toDoId = todoId
-                item.dueDate = toDoDate
+                item.dueDate = newDate
                 item.isCompleted = false
                 dbHandler.updateToDoItem(item)
                 refreshList()
