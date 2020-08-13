@@ -37,8 +37,8 @@ class FragmentMovies : Fragment() {
         attachMovieResultsOnScrollListener()
     }
 
-    private fun getMovie() {
-        MoviesRepository.getPopularMovies(
+    private fun getFavoriteMovies() {
+        MoviesRepository.getFavoriteMovies(
             movieOffset,
             ::onMoviesFetched,
             ::onError
@@ -68,7 +68,7 @@ class FragmentMovies : Fragment() {
                     //Disable scroll listener, increment moviesResultsLimit and call function
                     movie!!.removeOnScrollListener(this)
                     movieOffset += 20
-                    getMovie()
+                    getFavoriteMovies()
                 }
             }
         })
@@ -103,7 +103,7 @@ class FragmentMovies : Fragment() {
              onSuccess = ::onMoviesFetched,
              onError = ::onError
          )
-         getMovie()
+         getFavoriteMovies()
     }
 
 }

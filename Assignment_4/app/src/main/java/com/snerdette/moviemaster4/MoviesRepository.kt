@@ -41,4 +41,29 @@ object MoviesRepository {
                 }
             })
     }
+
+    fun getFavoriteMovies(
+        page: Int = 1,
+        onSuccess: (myLikedMovies: List<Movie>) -> Unit,
+        onError: () -> Unit
+    ) {
+        api.getPopularMovies(page = page)
+            .enqueue(object : Callback<GetFavoritesResponse> { override fun onResponse(
+                call: Call<GetFavoritesResponse>, response: Response<GetFavoritesResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) { onSuccess.invoke(responseBody.myLikedMovies)
+                    } else {
+                        onError.invoke()
+                    }
+                } else {
+                    onError.invoke()
+                }
+            }
+                override fun onFailure(call: Call<GetFavoritesResponse>, t: Throwable) {
+                    onError.invoke()
+                }
+            })
+    }
 }

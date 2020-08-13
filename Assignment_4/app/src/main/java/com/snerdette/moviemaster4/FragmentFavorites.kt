@@ -33,7 +33,8 @@ class FragmentFavorites : Fragment() {
         val mySnapshot = ArrayList<LikeMovie>()
         movieAdapter = MovieAdapter(mutableListOf(), { movie -> showMovieDetails(movie) }, mySnapshot)
         movie?.adapter = movieAdapter
-        // refresh myLikedMovies here?
+        // refresh myLikedMovies?
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

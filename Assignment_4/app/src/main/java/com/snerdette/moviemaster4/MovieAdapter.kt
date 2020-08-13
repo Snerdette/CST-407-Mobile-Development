@@ -114,7 +114,7 @@ class MovieAdapter(
                 .into(poster)
 
             movieTitle.text = movie.title
-            movieRating.rating = movie.rating
+            //movieRating.rating = movie.rating
             //movieReviewCount.text = "${movie.reviewCount} reviews"
             itemView.setOnClickListener {onMovieClick.invoke(movie)}
         }
